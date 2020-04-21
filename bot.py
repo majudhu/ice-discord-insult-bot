@@ -1,12 +1,13 @@
 #bot.py
 
-#V.2
+#V.3
 #python C:\Users\Lola\Documents\Pythonex\Bot-testing\bot.py
 #Now Supports !kaey for insults
 #Words now stored in seperate file
 #Now includes !attack - insults on attacks
 #Logging now supported
 #Now Supports !timecheck iPM to display time zones with deafult time to Male'
+#Now deletes insult aurthor
 
 import os
 import random
@@ -79,6 +80,7 @@ async def insulter(ctx, *arg):
     respond = respond()
     
     await ctx.send(respond)
+    await ctx.message.delete()
     
     
 @bot.command(name='timecheck', help='Look up times')
