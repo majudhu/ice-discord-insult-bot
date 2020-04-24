@@ -188,6 +188,7 @@ Players joined:
             await ctx.message.delete()
                 
     elif key == 'delete':
+        await ctx.message.delete()
         plan.clear()
         planmembers.clear()
 
