@@ -154,13 +154,15 @@ async def makelist(ctx, key, *arg):
     def showmessage():
         message = (''.join(*arg))
         plan.append(message)
+              
+        np = len(planmembers)
         
         membersPrint = (','.join(planmembers))
         
         return f'''```
 {message}
 
-Players joined:
+Players joined ({np}):
 {membersPrint}
 ```'''
     if key == 'make':
