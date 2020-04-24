@@ -1,7 +1,6 @@
 #bot.py
 
 #V.4
-#python C:\Users\Lola\Documents\Pythonex\Bot-testing\bot.py
 #Now Supports !kaey for insults
 #Words now stored in seperate file
 #Now includes !attack - insults on attacks
@@ -150,9 +149,10 @@ async def makelist(ctx, key, *arg):
     
     member = ctx.message.author
     sender = member.name
-    message = (''.join(*arg))
+    
 
     def showmessage():
+        message = (''.join(*arg))
         np = len(planmembers)
         membersPrint = (','.join(planmembers))
        
@@ -168,6 +168,7 @@ Players joined ({np}):
         await ctx.send(f'{sender} created a plan!')
         if sender not in planmembers:
             planmembers.append(sender)
+        message = (''.join(*arg))
         plan.append(message)
         await ctx.send(showmessage())
         await ctx.message.delete()
