@@ -165,7 +165,8 @@ Players joined:
 ```'''
     if key == 'make':
         await ctx.send(f'{sender} created a plan!')
-        planmembers.append(sender)
+        if sender not in planmembers:
+            planmembers.append(sender)
         await ctx.send(showmessage())
         await ctx.message.delete()
 
