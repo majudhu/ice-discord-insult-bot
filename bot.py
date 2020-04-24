@@ -141,6 +141,9 @@ async def insulter(ctx):
     
     if (random.randint(1,3)) == 1:
         await ctx.send(f'@{sender} {finalinsult}')
+       
+plan = []
+planmembers = []
 
 @bot.command(name='plan')
 async def makelist(ctx, key, *arg):
