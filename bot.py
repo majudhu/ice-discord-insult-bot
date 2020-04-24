@@ -150,15 +150,12 @@ async def makelist(ctx, key, *arg):
     
     member = ctx.message.author
     sender = member.name
+    message = (''.join(*arg))
 
     def showmessage():
-        message = (''.join(*arg))
-        plan.append(message)
-              
         np = len(planmembers)
-        
         membersPrint = (','.join(planmembers))
-        
+       
         return f'''```
 {message}
 
@@ -166,9 +163,12 @@ Players joined ({np}):
 {membersPrint}
 ```'''
     if key == 'make':
+        plan.clear()
+        planmembers.clear()
         await ctx.send(f'{sender} created a plan!')
         if sender not in planmembers:
             planmembers.append(sender)
+        plan.append(message)
         await ctx.send(showmessage())
         await ctx.message.delete()
 
@@ -183,7 +183,7 @@ Players joined ({np}):
             planmembers.append(sender)
             await ctx.send(showmessage())
             await ctx.message.delete()
-    
+
     elif key == 'out':
         if len(plan) == 0:
             await ctx.send('There are no plans. :(')
@@ -192,6 +192,9 @@ Players joined ({np}):
             planmembers.remove(sender)
             await ctx.send(f'{sender} pussied out')
             await ctx.message.delete()
+       
+    elif key == 'show':
+        await ctx.send(showmessage())
                 
     elif key == 'delete':
         await ctx.message.delete()
