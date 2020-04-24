@@ -1,6 +1,6 @@
 #bot.py
 
-#V.3
+#V.4
 #python C:\Users\Lola\Documents\Pythonex\Bot-testing\bot.py
 #Now Supports !kaey for insults
 #Words now stored in seperate file
@@ -8,6 +8,7 @@
 #Logging now supported
 #Now Supports !timecheck iPM to display time zones with deafult time to Male'
 #Now deletes insult aurthor
+#Now supports plan making
 
 import os
 import random
@@ -140,6 +141,59 @@ async def insulter(ctx):
     
     if (random.randint(1,3)) == 1:
         await ctx.send(f'@{sender} {finalinsult}')
+
+@bot.command(name='plan')
+async def makelist(ctx, key, *arg):
+    
+    member = ctx.message.author
+    sender = member.name
+
+    def showmessage():
+        message = (''.join(*arg))
+        plan.append(message)
+        
+        membersPrint = (','.join(planmembers))
+        
+        return f'''```
+{message}
+
+Players joined:
+{membersPrint}
+```'''
+    if key == 'make':
+        await ctx.send(f'{sender} created a plan!')
+        planmembers.append(sender)
+        await ctx.send(showmessage())
+        await ctx.message.delete()
+
+    elif key == 'in':
+        if len(plan) == 0:
+            await ctx.send('There are no plans. :(')
+            
+        elif sender in planmembers:
+            await ctx.send('You have already joined the plan')
+            
+        elif sender not in planmembers:
+            planmembers.append(sender)
+            await ctx.send(showmessage())
+            await ctx.message.delete()
+    
+    elif key == 'out':
+        if len(plan) == 0:
+            await ctx.send('There are no plans. :(')
+            
+        elif sender in planmembers:
+            planmembers.remove(sender)
+            await ctx.send(f'{sender} pussied out')
+            await ctx.message.delete()
+                
+    elif key == 'delete':
+        plan.clear()
+        planmembers.clear()
+
+    elif key == 'help':
+        await ctx.send('''You can <!plan make "faahana at 8"> to make or,
+<!plan in> to join current plan, or <!plan out> to pussy out''')
     
 bot.run(TOKEN)
 
