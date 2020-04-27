@@ -200,7 +200,10 @@ Players joined ({np}):
             await ctx.message.delete()
 
     elif key == 'show':
-        await ctx.send(showmessage())
+        if len(plan) == 0:
+            await ctx.send('There are no plans. :(')
+        else:
+            await ctx.send(showmessage())
                 
     elif key == 'delete':
         await ctx.message.delete()
