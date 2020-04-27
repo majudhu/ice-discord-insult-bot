@@ -8,6 +8,7 @@
 #Now Supports !timecheck iPM to display time zones with deafult time to Male'
 #Now deletes insult aurthor
 #Now supports plan making
+#Now supports covid
 
 import os
 import random
@@ -17,13 +18,15 @@ from dotenv import load_dotenv
 from datetime import datetime,timedelta
 import logging
 import re
+import requests
+from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.INFO, format=' %(asctime)s - %(levelname)s - (message)s')
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-       
+
 bot = commands.Bot(command_prefix='!')
 
 @bot.event
@@ -149,7 +152,6 @@ async def makelist(ctx, key, *arg):
     
     member = ctx.message.author
     sender = member.name
-    
 
     def showmessage():
         message = plan[0]
@@ -205,6 +207,34 @@ Players joined ({np}):
     elif key == 'help':
         await ctx.send('''You can <!plan make "faahana at 8"> to make or,
 <!plan in> to join current plan, or <!plan out> to pussy out''')
+              
+@bot.command(name='covid')
+async def insulter(ctx, country):
+    
+    url = "https://www.worldometers.info/coronavirus/"
+    res = requests.get(url).text
+    soup = BeautifulSoup(res,features="html.parser")
+
+    data = []
+
+    table = soup.find('table')
+    table_body = table.find('tbody')
+
+    rows = table_body.find_all('tr')
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele]) # Get rid of empty values
+              
+    # print(type(data))
+
+    searched = next(x for x in data if country in x)
+
+    country = (searched[0])
+    totalcase = (searched[1])
+    newcase = (searched[2])
+    
+    await ctx.send(f'{country}\nTotal Cases: {totalcase}\nNew Cases: {newcase}')
     
 bot.run(TOKEN)
 
