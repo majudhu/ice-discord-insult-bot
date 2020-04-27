@@ -164,6 +164,9 @@ async def makelist(ctx, key, *arg):
 Players joined ({np}):
 {membersPrint}
 ```'''
+    if len(key)==0:
+        await ctx.send('type in <!plan help> to get help')
+        
     if key == 'make':
         plan.clear()
         planmembers.clear()
@@ -195,7 +198,7 @@ Players joined ({np}):
             planmembers.remove(sender)
             await ctx.send(f'{sender} pussied out')
             await ctx.message.delete()
-       
+
     elif key == 'show':
         await ctx.send(showmessage())
                 
@@ -205,7 +208,7 @@ Players joined ({np}):
         planmembers.clear()
 
     elif key == 'help':
-        await ctx.send('''You can <!plan make "faahana at 8"> to make or,
+        await ctx.send('''You can <!plan make "faahana at 8"> (plan message must inside double quotaion) to make or,
 <!plan in> to join current plan, or <!plan out> to pussy out''')
               
 @bot.command(name='covid')
