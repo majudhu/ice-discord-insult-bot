@@ -154,7 +154,7 @@ async def makelist(ctx, key, *arg):
     def showmessage():
         message = plan[0]
         np = len(planmembers)
-        membersPrint = (','.join(planmembers))
+        membersPrint = (', '.join(planmembers))
        
         return f'''```
 {message}
